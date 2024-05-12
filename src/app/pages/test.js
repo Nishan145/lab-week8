@@ -31,12 +31,3 @@ export async function getServerSideProps() {
     };
   }
 }
-
-// export async function getServerSideProps() {
-//   const posts = await getAllPosts();
-//   return {
-//     props: {
-//       posts,
-//     },
-//   };
-// }

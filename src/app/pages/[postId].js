@@ -9,7 +9,7 @@ export default function Post({ post }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addComment(post.id, name, email, comment);
+    await addComment(post.id, name, comment);
     router.replace(router.asPath);
   };
 
@@ -34,14 +34,4 @@ export default function Post({ post }) {
       </form>
     </div>
   );
-}
-
-export async function getServerSideProps({ params }) {
-  const { postId } = params;
-  const post = await getPostById(postId);
-  return {
-    props: {
-      post,
-    },
-  };
 }

@@ -1,6 +1,5 @@
 import { Pool } from "pg";
 
-// Create a new pool
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -19,16 +18,16 @@ export async function getAllPosts() {
   }
 }
 
-export async function addComment(postId, name, email, comment) {
+export async function addComment(postId, name, comment) {
   try {
     // Write SQL Query
     const sql = `
-            INSERT INTO comments (post_id, name, email, comment)
-            VALUES ($1, $2, $3, $4)
+            INSERT INTO comments (post_id, name, comment) // Removed 'email' placeholder
+            VALUES ($1, $2, $3)
         `;
 
     // Execute Query
-    await pool.query(sql, [postId, name, email, comment]);
+    await pool.query(sql, [postId, name, comment]); // Removed 'email' parameter
 
     // Return success message
     return { success: true, message: "Comment added successfully" };
