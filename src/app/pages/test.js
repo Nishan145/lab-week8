@@ -14,10 +14,29 @@ export default function Test({ posts }) {
 }
 
 export async function getServerSideProps() {
-  const posts = await getAllPosts();
-  return {
-    props: {
-      posts,
-    },
-  };
+  try {
+    const posts = await getAllPosts();
+    console.log("Fetched posts:", posts); // Logging fetched posts
+    return {
+      props: {
+        posts,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching posts:", error); // Logging error if fetch fails
+    return {
+      props: {
+        posts: [],
+      },
+    };
+  }
 }
+
+// export async function getServerSideProps() {
+//   const posts = await getAllPosts();
+//   return {
+//     props: {
+//       posts,
+//     },
+//   };
+// }
