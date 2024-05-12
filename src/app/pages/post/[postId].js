@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { getPostById, addComment } from "../lib/posts.js";
+import { addComment } from "../../lib/posts";
 
-export default function Post({ post }) {
+export default function Post() {
   const router = useRouter();
+  const { postId } = router.query;
   const [name, setName] = useState("");
   const [comment, setComment] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addComment(post.id, name, comment);
+    // Add comment to the post
+    await addComment(postId, name, comment);
+    // Redirect to the same page to refresh and display the new comment
     router.replace(router.asPath);
   };
 
   return (
     <div>
-      <h1>{post.title}</h1>
-      <p>{post.content}</p>
-      <h2>Comments</h2>
+      <h1>Individual Post</h1>
+      <p>Post ID: {postId}</p>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -30,7 +32,7 @@ export default function Post({ post }) {
           onChange={(e) => setComment(e.target.value)}
           placeholder="Comment"
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Submit Comment</button>
       </form>
     </div>
   );
